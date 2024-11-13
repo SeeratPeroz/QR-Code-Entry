@@ -1,0 +1,175 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  {% load static %}
+  <head>
+      {% include "staticLinks/staticLink.html" %}
+      <meta charset="utf-8">
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+      <title>Patient List</title>
+      <meta name="description" content="">
+      <meta name="keywords" content="">
+      <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+      
+      
+      <style>
+        /* Background Image */
+        body {
+            background-image: url("{% static 'assets/img/services.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Container Styling */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        .patient-list-container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .patient-list-container h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Button Styling */
+        .btn-back {
+            margin-top: 20px;
+            display: block;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #007bff;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        /* Footer Styling */
+        .footer {
+            text-align: center;
+            color: #fff;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .patient-list-container {
+                padding: 15px;
+            }
+
+            .patient-list-container h2 {
+                font-size: 1.5rem;
+            }
+
+            .btn-back {
+                width: 100%;
+            }
+
+            /* Make the table scrollable on small screens */
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+      </style>
+  </head>
+
+  <body>
+
+    <div class="container">
+        <div class="patient-list-container">
+            <h2>Inactive Patients</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Date of Birth</th>
+                      <th>Entry Date</th>
+                      <th>Actions</th> <!-- New column for the action button -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for patient in patients %}
+                      <tr>
+                        <td>{{ patient.first_name }}</td>
+                        <td>{{ patient.last_name }}</td>
+                        <td>{{ patient.dob }}</td>
+                        <td>{{ patient.created_at }}</td>
+                        <td>
+                          <!-- Activate Button -->
+                          <a href="{% url 'activate_patient' patient.id %}" class="btn btn-activate">Activate</a>
+                        </td>
+                      </tr>
+                    {% empty %}
+                      <tr>
+                        <td colspan="5" class="text-center">No inactive patients found.</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        </div>
+  
+        <!-- Back Button -->
+        <a onclick="window.location.reload();" class="btn btn-back">Refresh</a>
+        <a href="{% url 'index' %}" class="btn btn-back">Back to Home</a>
+    </div>
+  
+    <div class="footer">
+      <p>&copy; 2024 Smile Health | All Rights Reserved</p>
+    </div>
+  
+    <!-- Add Bootstrap 5 JS (Optional for certain features like dropdowns, modals, etc.) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gyb3Q7vE6jRrAB8Ix3k1hO1pzv0yT0vJX3XMhCm8V5yaHOg56I" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0gF0m2lEx4jKw6duL1Ksk2W9b1J3KZzK8z6aJ0siEn1ne72M" crossorigin="anonymous"></script>
+  
+  </body>
+  </html>
